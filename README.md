@@ -82,7 +82,7 @@ Desenvolver uma API Rest para consulta de CNPJ e para cotação de fretes na Fre
         ]
     }
 ```
-- **Processo:** Utilizar os dados de entrada para consumir a API da Frete Rápido no método “(Cálculo do Frete)[3]”. Os dados recebidos devem complementar a estrutura padrão obrigatória para a requisição na Frete Rápido.
+- **Processo:** Utilizar os dados de entrada para consumir a API da Frete Rápido no método “[Cálculo do Frete][1]”. Os dados recebidos devem complementar a estrutura padrão obrigatória para a requisição na Frete Rápido.
 - **Retorno:**
 ```json
     {
@@ -124,7 +124,7 @@ Tecnologias que você pode utilizar (mas fique a vontade):
  
 - Faça um *Fork* deste repositório;
 - Coloque seu projeto no seu *Fork*;
-- Você tem a liberdade de realizar o desafio com a tecnologia que achar melhor. Lembre de informar quais tecnologias foram usadas, como instalar, rodar e efetuar os acessos no arquivo README.md para análise do desafio.
 - Solicite um *Pull Request*, com **seu nome** na descrição, para nossa avaliação.
+- Você tem a liberdade de realizar o desafio com a tecnologia que achar melhor. Lembre de informar quais tecnologias foram usadas, como instalar, rodar e efetuar os acessos no arquivo README.md para análise do desafio.
 
-[3]: https://freterapido.com/dev/dist/api-ecommerce.html#/!#content_simulacao
+[1]: https://freterapido.com/dev/dist/api-ecommerce.html#/!#content_simulacao
