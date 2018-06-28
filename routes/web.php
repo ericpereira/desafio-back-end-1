@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('cnpj/{cnpj}', 'IndexController@getJson');
+Route::post('quote', 'IndexController@getQuote')->name('quote');
+
+Route::get('quote2', 'IndexController@testApi')->name('quote2');

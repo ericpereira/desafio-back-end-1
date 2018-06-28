@@ -66,16 +66,6 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
 
             <div class="content">
                 <div class="title m-b-md">
@@ -83,7 +73,8 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">asdasdasdadas</a>
+                    <button id='quoteButton' >Quote</button>
+                    <a href="#">asdasdasdadas</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
@@ -91,5 +82,51 @@
                 </div>
             </div>
         </div>
+        <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $('#quoteButton').on('click', function(){
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('quote') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        destinatario: {
+                            endereco: {
+                                cep: "01311000"
+                            }
+                        },
+                        volumes: [
+                            {
+                                tipo: 9,
+                                quantidade: 1,
+                                peso: 5,
+                                valor: 349,
+                                sku: "abc-teste-123",
+                                altura: 0.2,
+                                largura: 0.2,
+                                comprimento: 0.2
+                            },
+                            {
+                                tipo: 7,
+                                quantidade: 2,
+                                peso: 4,
+                                valor: 556,
+                                sku: "abc-teste-527",
+                                altura: 0.4,
+                                largura: 0.6,
+                                comprimento: 0.15
+                            }
+                        ]},
+                    dataType: 'json',
+                    success:function(res) {
+                        $('.title').html(res.status);
+                    } 
+                });
+            })
+
+        </script>
     </body>
 </html>

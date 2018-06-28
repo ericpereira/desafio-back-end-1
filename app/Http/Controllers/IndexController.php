@@ -6,6 +6,81 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+	
+	public function testApi(Request $request){
+		$client = new \GuzzleHttp\Client();
+		$resApi = $client->request('POST',
+			'https://freterapido.com/sandbox/api/external/embarcador/v1/quote-simulator',
+			[
+				'json' => 
+				[
+					'remetente' => [
+						'cnpj' => 17184406000174
+					],
+					'destinatario' => [
+						'tipo_pessoa' => 1,
+						'endereco' => [
+							'cep' => '29932520'
+						]
+					],
+					'volumes' => [
+						[
+							'tipo' => 7,
+			                'quantidade' => 1,
+			                'peso' => 5,
+			                'valor' => 349,
+			                'sku' => "abc-teste-123",
+			                'altura' => 0.2,
+			                'largura' => 0.2,
+			                'comprimento' => 0.2
+						],
+						[
+							'tipo' => 7,
+			                'quantidade' => 1,
+			                'peso' => 5,
+			                'valor' => 349,
+			                'sku' => "abc-teste-123",
+			                'altura' => 0.2,
+			                'largura' => 0.2,
+			                'comprimento' => 0.2
+						],
+					],
+					'codigo_plataforma' => '588604ab3',
+					'token' => '2ff525e2d71540700b7949a65491121c'
+				]
+			]);
+
+		//$dataResApi = json_decode($resApi->getBody());
+		return $resApi->getBody();
+	}
+
+
+	public function getQuote(Request $request){
+
+		$response = response()->json([
+    		'transportadoras' => [
+    			[
+    				'nome' => 'nome 1',
+					'servico' => 'lul11',
+    			    'prazo_entraga' => 3,
+    			    'prazo_frete' => 99
+    			],
+    			[
+    				'nome' => 'nooome2',
+					'servico' => 'lul222',
+    			    'prazo_entraga' => 1,
+    			    'prazo_frete' => 17
+    			],
+    		],
+    		'status' => $request->volumes[0]['tipo']
+    	], 200, [], JSON_UNESCAPED_UNICODE);
+		$response->header('Content-Type', 'application/json');
+		$response->header('charset', 'utf-8');
+
+    	return $response;
+    	//return $dataResApi;
+	}
+
 	public function validar_cnpj($cnpj){
 		$cnpj = preg_replace('/[^0-9]/', '', (string) $cnpj);
 		// Valida tamanho
@@ -33,9 +108,7 @@ class IndexController extends Controller
     public function getJson(Request $request){
     	if($this->validar_cnpj($request->cnpj)){
     		$client = new \GuzzleHttp\Client();
-			$res = $client->request('GET', 'https://www.receitaws.com.br/v1/cnpj/27865757000102', [
-			    'auth' => ['user', 'pass']
-			]);
+			$res = $client->request('GET', 'https://www.receitaws.com.br/v1/cnpj/'.$request->cnpj);
 
 			$response = json_decode($res->getBody());
 
