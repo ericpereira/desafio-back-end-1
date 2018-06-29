@@ -10,7 +10,7 @@ php artisan serve
 
 Rota 1:
 Para realizar a consulta do cnpj, abrir a rota http://localhost:8000/cnpj/{cnpj}
-onde em {cnpj} deve ir o valor numérico somente, de um cnpj válido
+onde em {cnpj} deve ir o valor numérico de um cnpj válido
 
 Rota 2:
 A cotação pode ser feita de duas formas
