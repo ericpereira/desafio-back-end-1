@@ -67,8 +67,8 @@ class IndexController extends Controller
 			/*
 				Monta o vetor de retorno com as transportadoras cotadas
 			*/
-			$transportadoras = [];
-			for($i = 0; $i < count($data->transportadoras); $i++){ 
+			$transportadoras = []; 
+			for($i = 0; $i < count($data->transportadoras); $i++){
 				$transportadoras[$i]['nome'] = $data->transportadoras[$i]->nome;
 				$transportadoras[$i]['servico'] = $data->transportadoras[$i]->servico;
 				$transportadoras[$i]['prazo_entrega'] = $data->transportadoras[$i]->prazo_entrega;

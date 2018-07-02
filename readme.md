@@ -2,7 +2,7 @@ Depois de clonar a aplicação, basta abrir a pasta e executar os comandos:
 
 composer install
 
-composer dump-autoload 
+composer dump-autoload
  
 php artisan config:cache 
 
@@ -10,7 +10,7 @@ Para rodar o site, executar o comando:
 
 php artisan serve
 
-OBSERVAÇÃO: Caso receba o erro da url
+OBSERVAÇÃO: Caso receba um erro ao rodar o site
 gerar outro .env
 
 cp (ou copy no windows) .env.example .env

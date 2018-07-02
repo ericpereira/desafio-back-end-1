@@ -55,7 +55,7 @@
                                 comprimento: 0.15
                             } 
                         ]},
-                    success:function(res) {
+                    success:function(res) { 
                         $('.response-content').append('<br/>resposta...<br/>'+res);
                         console.log(res);
                     },
