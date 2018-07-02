@@ -53,7 +53,7 @@
                                 altura: 0.4,
                                 largura: 0.6,
                                 comprimento: 0.15
-                            }
+                            } 
                         ]},
                     success:function(res) {
                         $('.response-content').append('<br/>resposta...<br/>'+res);

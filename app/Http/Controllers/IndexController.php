@@ -82,7 +82,7 @@ class IndexController extends Controller
 
 			return json_encode($jsonData, JSON_UNESCAPED_UNICODE);
 
-		}
+		} 
 
 		/*
 			Caso o cnpj seja inválido, retorna a string
