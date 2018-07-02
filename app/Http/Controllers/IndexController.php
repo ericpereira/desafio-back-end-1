@@ -78,14 +78,9 @@ class IndexController extends Controller
 			/*
 				Codifica os dados de retorno em json
 			*/
-			$response = response()->json([
-	    		'transportadoras' => $transportadoras
-	    	], 200, [], JSON_UNESCAPED_UNICODE);
-			$response->header('Content-Type', 'application/json');
-			$response->header('charset', 'utf-8');
+			$jsonData['transportadoras'] = $transportadoras;
 
-			//return $response; //retorna o json			
-			return dd($response);//caso queira visualizar os dados no html basta descomentar essa linha e comentar a linha de cima
+			return json_encode($jsonData, JSON_UNESCAPED_UNICODE);
 
 		}
 
