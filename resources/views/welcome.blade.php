@@ -45,7 +45,7 @@
                                 comprimento: 0.2
                             },
                             {
-                                tipo: 7,
+                                tipo: 7, 
                                 quantidade: 2,
                                 peso: 4,
                                 valor: 556,

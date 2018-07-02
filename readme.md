@@ -1,10 +1,10 @@
-Depois de clonar a aplicação, basta abrir a pasta e executar os comandos:
+Depois de clonar a aplicação, basta abrir a pasta e executar os comandos: 
 
 composer install
 
-composer dump-autoload
+composer dump-autoload 
  
-php artisan config:cache
+php artisan config:cache 
 
 Para rodar o site, executar o comando:
 
