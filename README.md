@@ -1,8 +1,10 @@
 Depois de clonar a aplicação, basta abrir a pasta e executar os comandos:
 
+composer install
+
 composer dump-autoload
 
-composer install
+composer config:cache
 
 Para rodar o site, executar o comando:
 
