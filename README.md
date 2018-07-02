@@ -4,7 +4,7 @@ composer install
 
 composer dump-autoload
 
-composer config:cache
+php artisan config:cache
 
 Para rodar o site, executar o comando:
 
