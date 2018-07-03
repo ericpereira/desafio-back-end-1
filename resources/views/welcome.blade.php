@@ -13,6 +13,7 @@
     <body>
        
         <button id='quoteButton'>Quote</button>
+        <button id='quoteButton2'>CNPJ</button>
          <div class='response-content' style='height: 600px; width: 800px; border: 1px solid #cecece;'>
             Console:
         </div>
@@ -30,7 +31,7 @@
                         _token: "{{ csrf_token() }}",
                         destinatario: {
                             endereco: {
-                                cep: "01311000"
+                                cep: "asdas"
                             }
                         },
                         volumes: [
@@ -56,11 +57,26 @@
                             } 
                         ]},
                     success:function(res) { 
-                        $('.response-content').append('<br/>resposta...<br/>'+res);
-                        console.log(res);
+                        $('.response-content').append('<br/>resposta...<br/>'+JSON.stringify(res));
+                        console.log(JSON.stringify(res));
                     },
                     error:function(msg){
-                        $('.response-content').append(msg);
+                        $('.response-content').append(JSON.stringify(msg));
+                    }
+                });
+            })
+
+            $('#quoteButton2').on('click', function(){
+                $('.response-content').append('<br/>atualizando...');
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('cnpj', ['cnpj' => 27865757000101 ]) }}",
+                    success:function(res) { 
+                        $('.response-content').append('<br/>resposta...<br/>'+JSON.stringify(res));
+                        console.log(JSON.stringify(res));
+                    },
+                    error:function(msg){
+                        $('.response-content').append(JSON.stringify(msg));
                     }
                 });
             })

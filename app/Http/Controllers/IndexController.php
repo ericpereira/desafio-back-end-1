@@ -15,7 +15,7 @@ class IndexController extends Controller
 			Verifica se é um cnpj válido
     	*/
 		$request->cnpj = (isset($request->cnpj) ? $request->cnpj : 17184406000174);
-		if($this->validar_cnpj($request->cnpj)){
+		if($this->validarCnpj($request->cnpj) && is_numeric($request->destinatario['endereco']['cep'])){
 
 			$client = new \GuzzleHttp\Client();
 			
@@ -67,7 +67,7 @@ class IndexController extends Controller
 			/*
 				Monta o vetor de retorno com as transportadoras cotadas
 			*/
-			$transportadoras = []; 
+			$transportadoras = NULL; 
 			for($i = 0; $i < count($data->transportadoras); $i++){
 				$transportadoras[$i]['nome'] = $data->transportadoras[$i]->nome;
 				$transportadoras[$i]['servico'] = $data->transportadoras[$i]->servico;
@@ -78,22 +78,32 @@ class IndexController extends Controller
 			/*
 				Codifica os dados de retorno em json
 			*/
-			$jsonData['transportadoras'] = $transportadoras;
 
-			return json_encode($jsonData, JSON_UNESCAPED_UNICODE);
+			return response()->json([
+	    		'transportadoras' => $transportadoras,
+	    		'status' => '200 OK'
+	    	], 200, [], JSON_UNESCAPED_UNICODE);
 
 		} 
 
 		/*
-			Caso o cnpj seja inválido, retorna a string
+			Retorna o json com o erro
 		*/
-    	return "CNPJ inválido";
+
+		$errorString = '';
+		if(!$this->validarCnpj($request->cnpj)){ $errorString .= "CNPJ inválido"; }
+		if(!is_numeric($request->destinatario['endereco']['cep'])){ $errorString .= " CEP inválido"; }
+
+		return response()->json([
+	    		'status' => '400 Bad Request',
+	    		'error' => $errorString
+	    	], 400, [], JSON_UNESCAPED_UNICODE);
 	}
 
 	/*
 		Função utilizada para validar o cnpj
 	*/
-	public function validar_cnpj($cnpj){
+	public function validarCnpj($cnpj){
 		
 
 		$cnpj = preg_replace('/[^0-9]/', '', (string) $cnpj);
@@ -129,7 +139,10 @@ class IndexController extends Controller
     	/*
 			Verifica se é um cnpj válido
     	*/
-    	if($this->validar_cnpj($request->cnpj)){
+
+		$jsonData = new \stdClass();
+
+    	if($this->validarCnpj($request->cnpj)){
     		$client = new \GuzzleHttp\Client();
 
     		/*
@@ -142,11 +155,20 @@ class IndexController extends Controller
 			*/
 			$response = json_decode($res->getBody());
 
-
 			/*
 				Monta o json de retorno, como pedido no desafio
 			*/
-			$response = response()->json([
+			$atividadesEmpresa = NULL;
+			for($i = 0; $i < count($response->atividade_principal); $i++){
+				$atividadesEmpresa[$i]['text'] = $response->atividade_principal[$i]->text;
+				$atividadesEmpresa[$i]['code'] = $response->atividade_principal[$i]->code;
+			}
+
+
+			/*
+				Retorna o json
+			*/
+			return response()->json([
 	    		'empresa' => [
 	    			'cnpj' => $response->cnpj,
 	    			'ultima_atualizacao' => $response->data_situacao,
@@ -170,24 +192,18 @@ class IndexController extends Controller
 	    				'telefone' => $response->telefone,
 	    				'email' => $response->email,
 	    			],
-	    			'atividade_principal' => [
-	    				'text' => $response->atividade_principal[0]->text,
-	    				'code' => $response->atividade_principal[0]->code,	
-	    			]
-	    		]
+	    			'atividade_principal' => $atividadesEmpresa
+	    		],
+	    		'status' => '200 OK'
 	    	], 200, [], JSON_UNESCAPED_UNICODE);
-			$response->header('Content-Type', 'application/json');
-			$response->header('charset', 'utf-8');
-
-			/*
-				Retorna o json
-			*/
-	    	return $response;
     	}
 
     	/*
 			Caso o cnpj seja inválido, retorna a string
 		*/
-		return "CNPJ inválido";
+		return response()->json([
+	    		'status' => '400 Bad Request',
+	    		'error' => 'CNPJ inválido'
+	    	], 400, [], JSON_UNESCAPED_UNICODE);
     }
 }
